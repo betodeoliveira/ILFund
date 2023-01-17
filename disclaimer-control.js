@@ -1,23 +1,36 @@
-$(".disclaimer-locked-sections").css("display", "none");
-$(".disclaimer_denied-wrapper").css("display", "none");
+if ($(".disclaimer-component").length >= 1) {
+    let $body = $(document.body);
 
-let disclaimerAccepted = sessionStorage.getItem("disclaimerAccepted");
-console.log(disclaimerAccepted);
+    setTimeout(() => {
+        $(".disclaimer-locked-sections").css("display", "none");
+        $(".disclaimer_denied-wrapper").css("display", "none");
 
-if (disclaimerAccepted == "true") {
-    $(".disclaimer-locked-sections").css("display", "block");
+        let disclaimerAccepted = sessionStorage.getItem("disclaimerAccepted");
+        console.log(disclaimerAccepted);
+
+        if (disclaimerAccepted == "true") {
+            $(".disclaimer-locked-sections").css("display", "block");
+        }
+        else {
+            $body.css('overflow', 'hidden');
+        $body.css('position', 'relative');
+            $(".disclaimer_trigger-show").click();
+        }
+
+        $(".is-disclaimer-accepted").on("click", function () {
+            $body.css('overflow', '');
+            $body.css('position', '');
+            sessionStorage.setItem("disclaimerAccepted", true);
+            $(".disclaimer_denied-wrapper").css("display", "none");
+            $(".disclaimer-locked-sections").css("display", "block");
+        });
+
+        $(".is-disclaimer-denied").on("click", function () {
+            sessionStorage.setItem("disclaimerAccepted", false);
+            $(".disclaimer_denied-wrapper").css("display", "flex");
+        });
+    }, 200);
 }
 else {
-    $(".disclaimer_trigger-show").click();
+    console.log("Disclaimer will not being shown")
 }
-
-$(".is-disclaimer-accepted").on("click", function () {
-    sessionStorage.setItem("disclaimerAccepted", true);
-    $(".disclaimer_denied-wrapper").css("display", "none");
-    $(".disclaimer-locked-sections").css("display", "block");
-});
-
-$(".is-disclaimer-denied").on("click", function () {
-    sessionStorage.setItem("disclaimerAccepted", false);
-    $(".disclaimer_denied-wrapper").css("display", "flex");
-});
