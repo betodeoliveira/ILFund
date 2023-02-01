@@ -37,6 +37,8 @@ document.addEventListener("DOMContentLoaded", function () {
             }]
         },
         options: {
+            resposive: true,
+            maintainAspectRatio: false,
             scales: {
                 x: {
                     display: false
